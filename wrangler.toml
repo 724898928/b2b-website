@@ -1,0 +1,26 @@
+name = "b2b-website"
+main = "worker.js"
+compatibility_date = "2026-05-20"
+
+# D1 Database binding
+[[d1_databases]]
+binding = "DB"
+database_name = "b2b_database"
+database_id = "5e2e1192-2772-4a63-aa5e-3afb8d2ae09b"
+
+# Environment variables
+[vars]
+ENVIRONMENT = "development"
+
+# R2 Storage for images
+[[r2_buckets]]
+binding = "IMAGES"
+bucket_name = "product-images"
+
+[[kv_namespaces]]
+binding = "STATIC_ASSETS"
+id = "ebdc3ec82b3a4953bbd98053247b3fb1"
+
+# Assets directory for serving the Vue3 SPA
+[assets]
+directory = "./dist"
