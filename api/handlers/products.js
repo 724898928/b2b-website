@@ -243,9 +243,10 @@ async function deleteProduct(request, env, productId, corsHeaders) {
       });
     }
 
-    await env.DB.prepare(
-      'UPDATE products SET is_active = 0, updated_at = CURRENT_TIMESTAMP WHERE id = ?'
-    ).bind(productId).run();
+    // await env.DB.prepare(
+    //   'UPDATE products SET is_active = 0, updated_at = CURRENT_TIMESTAMP WHERE id = ?'
+    // ).bind(productId).run();
+    await env.DB.prepare('DELETE FROM products WHERE id = ?').bind(productId).run();
 
     return new Response(JSON.stringify({ success: true }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
