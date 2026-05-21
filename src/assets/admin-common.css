@@ -1,10 +1,11 @@
 /* ========================================
    Admin Common Styles
    管理后台各组件共享的基础样式
+   所有选择器均以 .admin-app 为命名空间，避免与 main.css 冲突
    ======================================== */
 
 /* Buttons */
-.btn {
+.admin-app .btn {
   padding: 0.625rem 1.25rem;
   border: none;
   border-radius: 0.375rem;
@@ -14,58 +15,58 @@
   transition: all 0.2s;
 }
 
-.btn:disabled {
+.admin-app .btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-.btn-primary {
+.admin-app .btn-primary {
   background: #3b82f6;
   color: white;
 }
 
-.btn-primary:hover:not(:disabled) {
+.admin-app .btn-primary:hover:not(:disabled) {
   background: #2563eb;
 }
 
-.btn-secondary {
+.admin-app .btn-secondary {
   background: #6b7280;
   color: white;
 }
 
-.btn-secondary:hover {
+.admin-app .btn-secondary:hover {
   background: #4b5563;
 }
 
-.btn-danger {
+.admin-app .btn-danger {
   background: #ef4444;
   color: white;
 }
 
-.btn-danger:hover {
+.admin-app .btn-danger:hover {
   background: #dc2626;
 }
 
-.btn-warning {
+.admin-app .btn-warning {
   background: #f59e0b;
   color: white;
 }
 
-.btn-warning:hover {
+.admin-app .btn-warning:hover {
   background: #d97706;
 }
 
-.btn-small {
+.admin-app .btn-small {
   padding: 0.375rem 0.75rem;
   font-size: 0.75rem;
 }
 
 /* Form Elements */
-.form-group {
+.admin-app .form-group {
   margin-bottom: 1.5rem;
 }
 
-.form-label {
+.admin-app .form-label {
   display: block;
   margin-bottom: 0.5rem;
   font-size: 0.875rem;
@@ -73,8 +74,8 @@
   color: #1e293b;
 }
 
-.form-input,
-.form-textarea {
+.admin-app .form-input,
+.admin-app .form-textarea {
   width: 100%;
   padding: 0.625rem;
   border: 1px solid #e2e8f0;
@@ -83,19 +84,19 @@
   transition: border-color 0.2s;
 }
 
-.form-input:focus,
-.form-textarea:focus {
+.admin-app .form-input:focus,
+.admin-app .form-textarea:focus {
   outline: none;
   border-color: #3b82f6;
 }
 
-.form-textarea {
+.admin-app .form-textarea {
   resize: vertical;
   font-family: inherit;
 }
 
 /* Section Card */
-.section-card {
+.admin-app .section-card {
   background: white;
   border-radius: 0.5rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -103,26 +104,26 @@
 }
 
 @media (min-width: 1920px) {
-  .section-card {
+  .admin-app .section-card {
     padding: 2rem;
   }
 }
 
 /* Table */
-.table-container {
+.admin-app .table-container {
   overflow-x: auto;
 }
 
-.data-table {
+.admin-app .data-table {
   width: 100%;
   border-collapse: collapse;
 }
 
-.data-table thead {
+.admin-app .data-table thead {
   background: #f8f9fa;
 }
 
-.data-table th {
+.admin-app .data-table th {
   padding: 1rem;
   text-align: left;
   font-size: 0.875rem;
@@ -131,30 +132,30 @@
   border-bottom: 2px solid #e2e8f0;
 }
 
-.data-table td {
+.admin-app .data-table td {
   padding: 1rem;
   font-size: 0.875rem;
   color: #475569;
   border-bottom: 1px solid #e2e8f0;
 }
 
-.data-table tbody tr:hover {
+.admin-app .data-table tbody tr:hover {
   background: #f8f9fa;
 }
 
 @media (max-width: 768px) {
-  .data-table {
+  .admin-app .data-table {
     font-size: 0.75rem;
   }
 
-  .data-table th,
-  .data-table td {
+  .admin-app .data-table th,
+  .admin-app .data-table td {
     padding: 0.5rem;
   }
 }
 
 /* Status Badges */
-.status-badge {
+.admin-app .status-badge {
   display: inline-block;
   padding: 0.25rem 0.75rem;
   border-radius: 9999px;
@@ -163,57 +164,60 @@
   text-transform: capitalize;
 }
 
-.status-active, .status-completed {
+.admin-app .status-active,
+.admin-app .status-completed {
   background: #d1fae5;
   color: #065f46;
 }
 
-.status-inactive {
+.admin-app .status-inactive {
   background: #fef3c7;
   color: #92400e;
 }
 
-.status-pending {
+.admin-app .status-pending {
   background: #dbeafe;
   color: #1e40af;
 }
 
-.status-processing {
+.admin-app .status-processing {
   background: #fef3c7;
   color: #92400e;
 }
 
 /* Loading State */
-.loading-state {
+.admin-app .loading-state {
   padding: 3rem;
   text-align: center;
   color: #64748b;
 }
 
-.spinner {
+.admin-app .spinner {
   display: inline-block;
   width: 2rem;
   height: 2rem;
   border: 3px solid #e2e8f0;
   border-top-color: #3b82f6;
   border-radius: 50%;
-  animation: spin 0.8s linear infinite;
+  animation: admin-spin 0.8s linear infinite;
   margin-bottom: 1rem;
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
+@keyframes admin-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Empty State */
-.empty-state {
+.admin-app .empty-state {
   padding: 3rem;
   text-align: center;
   color: #64748b;
 }
 
 /* Notification */
-.notification {
+.admin-app .notification {
   margin-top: 1rem;
   padding: 1rem;
   border-radius: 0.375rem;
@@ -221,13 +225,13 @@
   font-size: 0.875rem;
 }
 
-.notification.success {
+.admin-app .notification.success {
   background: #d1fae5;
   color: #065f46;
   border: 1px solid #10b981;
 }
 
-.notification.error {
+.admin-app .notification.error {
   background: #fee2e2;
   color: #991b1b;
   border: 1px solid #ef4444;
