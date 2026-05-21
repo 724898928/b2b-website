@@ -40,7 +40,7 @@
       </div>
       <div class="footer-bottom">
         <p class="copyright">&copy; {{ currentYear }} {{ settingsStore.settings.site_name }}. All rights reserved.</p>
-<!--        <router-link to="/admin" class="admin-link">Admin Login</router-link>-->
+        <router-link to="/admin" class="admin-link">Admin Login</router-link>
       </div>
     </div>
   </footer>

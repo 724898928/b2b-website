@@ -16,6 +16,8 @@ export default {
 
     // For SPA, serve index.html for all non-API routes
     // This allows Vue Router to handle client-side routing
-    return env.ASSETS.fetch(request);
+    // Clone the original request to preserve headers and other properties
+    const indexHtmlRequest = new Request(`${url.origin}/index.html`, request);
+    return env.ASSETS.fetch(indexHtmlRequest);
   },
 };

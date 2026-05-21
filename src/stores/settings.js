@@ -11,7 +11,7 @@ export const useSettingsStore = defineStore('settings', () => {
     phone: '+1 234 567 8900',
     address: '123 Business St, City, Country',
     linkedin: '#',
-    facebook: '#',
+    facebook: 'https://www.facebook.com/share/1HHrV3zUg7/',
     twitter: '#'
   })
 

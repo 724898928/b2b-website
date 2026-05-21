@@ -5,8 +5,6 @@
 
 import { hashPassword, verifyPassword, generateToken, verifyToken } from '../utils/auth';
 
-const JWT_SECRET = 'your-secret-key-change-this-in-production'; // TODO: Move to environment variable
-
 export async function handleAdmin(request, env, corsHeaders) {
   const url = new URL(request.url);
   const method = request.method;
@@ -84,7 +82,7 @@ async function adminLogin(request, env, corsHeaders) {
       username: admin.username,
       role: admin.role,
       exp: Math.floor(Date.now() / 1000) + (24 * 60 * 60),
-    }, JWT_SECRET);
+    }, env.JWT_SECRET || 'your-secret-key-change-this-in-production');
 
     return new Response(JSON.stringify({
       success: true,
@@ -121,7 +119,7 @@ async function verifyAdminToken(request, env, corsHeaders) {
       });
     }
 
-    const payload = await verifyToken(token, JWT_SECRET);
+    const payload = await verifyToken(token, env.JWT_SECRET || 'your-secret-key-change-this-in-production');
 
     if (!payload) {
       return new Response(JSON.stringify({
@@ -173,7 +171,14 @@ async function adminLogout(request, env, corsHeaders) {
 // Get dashboard statistics
 async function getDashboardStats(request, env, corsHeaders) {
   try {
-    // TODO: Add authentication check
+    // Check if user is authenticated
+    const admin = await requireAuth(request, env);
+    if (!admin) {
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
 
     const { total_products } = await env.DB.prepare(
       'SELECT COUNT(*) as total_products FROM products WHERE is_active = 1'
@@ -223,7 +228,7 @@ export async function requireAuth(request, env) {
   }
 
   const token = authHeader.substring(7);
-  const payload = await verifyToken(token, JWT_SECRET);
+  const payload = await verifyToken(token, env.JWT_SECRET || 'your-secret-key-change-this-in-production');
 
   if (!payload) {
     return null;
