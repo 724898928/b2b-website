@@ -30,8 +30,9 @@ export const useProductStore = defineStore('products', () => {
         featuredProducts.value = response.data.data || []
       }
     } catch (error) {
-      console.error('Error loading featured products:', error)
-      throw error
+      console.warn('Featured products API unavailable, using empty list:', error.message)
+      // 即使 API 失败，也不抛出异常，让页面继续显示
+      featuredProducts.value = []
     }
   }
 

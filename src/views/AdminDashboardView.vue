@@ -13,7 +13,7 @@
           @click="handleNavClick(item)"
         >
           <span class="nav-icon">{{ item.icon }}</span>
-          <span class="nav-label">{{ item.label }}</span>
+          <span class="nav-label">{{ navLabels[item.id] }}</span>
         </div>
       </nav>
     </aside>
@@ -23,15 +23,15 @@
       <!-- Top Bar -->
       <header class="top-bar">
         <div class="top-bar-left">
-          <h1 class="page-title">Dashboard</h1>
+          <h1 class="page-title">{{ t('admin.dashboard.title') }}</h1>
           <div class="user-info">
-            <span class="welcome-text">Welcome back, Admin</span>
-            <span class="admin-badge">Super Admin</span>
+            <span class="welcome-text">{{ t('admin.dashboard.welcomeBack') }}, Admin</span>
+            <span class="admin-badge">{{ t('admin.dashboard.superAdmin') }}</span>
           </div>
         </div>
         <div class="top-bar-right">
-          <button @click="previewSite" class="btn btn-primary">Preview</button>
-          <button @click="handleLogout" class="btn btn-warning">Logout</button>
+          <button @click="previewSite" class="btn btn-primary">{{ t('admin.dashboard.preview') }}</button>
+          <button @click="handleLogout" class="btn btn-warning">{{ t('admin.dashboard.logout') }}</button>
         </div>
       </header>
 
@@ -44,21 +44,21 @@
             <div class="stat-card">
               <div class="stat-icon"></div>
               <div class="stat-content">
-                <h3 class="stat-label">Total Products</h3>
+                <h3 class="stat-label">{{ t('admin.overview.totalProducts') }}</h3>
                 <p class="stat-value">{{ productStore.products.length }}</p>
               </div>
             </div>
             <div class="stat-card">
               <div class="stat-icon">💬</div>
               <div class="stat-content">
-                <h3 class="stat-label">Total Inquiries</h3>
+                <h3 class="stat-label">{{ t('admin.overview.totalInquiries') }}</h3>
                 <p class="stat-value">{{ inquiries.length }}</p>
               </div>
             </div>
             <div class="stat-card">
               <div class="stat-icon">⏳</div>
               <div class="stat-content">
-                <h3 class="stat-label">Pending Inquiries</h3>
+                <h3 class="stat-label">{{ t('admin.overview.pendingInquiries') }}</h3>
                 <p class="stat-value">{{ pendingInquiriesCount }}</p>
               </div>
             </div>
@@ -66,16 +66,16 @@
 
           <!-- Recent Inquiries -->
           <div class="section-card">
-            <h2 class="section-title">Recent Inquiries</h2>
+            <h2 class="section-title">{{ t('admin.overview.recentInquiries') }}</h2>
             <div class="table-container">
               <table v-if="recentInquiries.length > 0" class="data-table">
                 <thead>
                   <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Product</th>
-                    <th>Status</th>
-                    <th>Date</th>
+                    <th>{{ t('admin.overview.name') }}</th>
+                    <th>{{ t('admin.overview.email') }}</th>
+                    <th>{{ t('admin.overview.product') }}</th>
+                    <th>{{ t('admin.overview.status') }}</th>
+                    <th>{{ t('admin.overview.date') }}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -93,7 +93,7 @@
                 </tbody>
               </table>
               <div v-else class="empty-state">
-                <p>No recent inquiries</p>
+                <p>{{ t('admin.overview.noRecentInquiries') }}</p>
               </div>
             </div>
           </div>
@@ -102,14 +102,14 @@
         <!-- Products Tab -->
         <div v-if="activeTab === 'products'" class="tab-content">
           <div class="section-header">
-            <h2 class="section-title">Manage Products</h2>
-            <button @click="openProductModal()" class="btn btn-primary">+ Add Product</button>
+            <h2 class="section-title">{{ t('admin.products.manageProducts') }}</h2>
+            <button @click="openProductModal()" class="btn btn-primary">{{ t('admin.products.addProduct') }}</button>
           </div>
 
           <div class="section-card">
             <div v-if="productStore.isLoading" class="loading-state">
               <div class="spinner"></div>
-              <p>Loading products...</p>
+              <p>{{ t('common.loading') }}</p>
             </div>
 
             <div v-else class="table-container">
@@ -118,8 +118,8 @@
                   <tr>
                     <th>ID</th>
                     <th>Name</th>
-                    <th>Category</th>
-                    <th>Featured</th>
+                    <th>{{ t('admin.products.category') }}</th>
+                    <th>{{ t('admin.products.featured') }}</th>
                     <th>Status</th>
                     <th>Actions</th>
                   </tr>
@@ -130,25 +130,25 @@
                     <td>{{ product.name }}</td>
                     <td>{{ product.category || '-' }}</td>
                     <td>
-                      <span v-if="product.is_featured" class="featured-badge">⭐ Yes</span>
-                      <span v-else class="text-muted">No</span>
+                      <span v-if="product.is_featured" class="featured-badge">⭐ {{ t('admin.products.yes') }}</span>
+                      <span v-else class="text-muted">{{ t('admin.products.no') }}</span>
                     </td>
                     <td>
                       <span :class="['status-badge', product.is_active ? 'status-active' : 'status-inactive']">
-                        {{ product.is_active ? 'Active' : 'Inactive' }}
+                        {{ product.is_active ? t('status.active') : t('status.inactive') }}
                       </span>
                     </td>
                     <td>
                       <div class="action-buttons">
-                        <button @click="editProduct(product)" class="btn btn-small btn-primary">Edit</button>
-                        <button @click="deleteProductConfirm(product)" class="btn btn-small btn-danger">Delete</button>
+                        <button @click="editProduct(product)" class="btn btn-small btn-primary">{{ t('admin.products.edit') }}</button>
+                        <button @click="deleteProductConfirm(product)" class="btn btn-small btn-danger">{{ t('admin.products.delete') }}</button>
                       </div>
                     </td>
                   </tr>
                 </tbody>
               </table>
               <div v-else class="empty-state">
-                <p>No products found. Click "Add Product" to create one.</p>
+                <p>{{ t('admin.products.noProducts') }}</p>
               </div>
             </div>
           </div>
@@ -156,27 +156,27 @@
 
         <!-- Inquiries Tab -->
         <div v-if="activeTab === 'inquiries'" class="tab-content">
-          <h2 class="section-title">Manage Inquiries</h2>
+          <h2 class="section-title">{{ t('admin.inquiries.manageInquiries') }}</h2>
 
           <div class="section-card">
             <div v-if="inquiriesLoading" class="loading-state">
               <div class="spinner"></div>
-              <p>Loading inquiries...</p>
+              <p>{{ t('common.loading') }}</p>
             </div>
 
             <div v-else class="table-container">
               <table v-if="inquiries.length > 0" class="data-table">
                 <thead>
                   <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Company</th>
-                    <th>Product</th>
-                    <th>Message</th>
-                    <th>Status</th>
-                    <th>Date</th>
-                    <th>Actions</th>
+                    <th>{{ t('admin.products.id') }}</th>
+                    <th>{{ t('admin.inquiries.name') }}</th>
+                    <th>{{ t('admin.inquiries.email') }}</th>
+                    <th>{{ t('admin.inquiries.company') }}</th>
+                    <th>{{ t('admin.inquiries.product') }}</th>
+                    <th>{{ t('admin.inquiries.message') }}</th>
+                    <th>{{ t('admin.inquiries.status') }}</th>
+                    <th>{{ t('admin.inquiries.date') }}</th>
+                    <th>{{ t('admin.inquiries.actions') }}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -195,23 +195,23 @@
                         @change="updateInquiryStatus(inquiry)"
                         class="status-select"
                       >
-                        <option value="pending">Pending</option>
-                        <option value="processing">Processing</option>
-                        <option value="completed">Completed</option>
+                        <option value="pending">{{ t('admin.inquiries.pending') }}</option>
+                        <option value="processing">{{ t('admin.inquiries.processing') }}</option>
+                        <option value="completed">{{ t('admin.inquiries.completed') }}</option>
                       </select>
                     </td>
                     <td>{{ formatDate(inquiry.created_at) }}</td>
                     <td>
                       <div class="action-buttons">
-                        <button @click="viewInquiry(inquiry)" class="btn btn-small btn-primary">View</button>
-                        <button @click="deleteInquiryConfirm(inquiry)" class="btn btn-small btn-danger">Delete</button>
+                        <button @click="viewInquiry(inquiry)" class="btn btn-small btn-primary">{{ t('admin.inquiries.view') }}</button>
+                        <button @click="deleteInquiryConfirm(inquiry)" class="btn btn-small btn-danger">{{ t('admin.inquiries.delete') }}</button>
                       </div>
                     </td>
                   </tr>
                 </tbody>
               </table>
               <div v-else class="empty-state">
-                <p>No inquiries found.</p>
+                <p>{{ t('admin.inquiries.noInquiries') }}</p>
               </div>
             </div>
           </div>
@@ -219,62 +219,62 @@
 
         <!-- Settings Tab -->
         <div v-if="activeTab === 'settings'" class="tab-content">
-          <h2 class="section-title">Website Settings</h2>
+          <h2 class="section-title">{{ t('admin.settings.websiteSettings') }}</h2>
 
           <div class="settings-container">
             <!-- Basic Information -->
             <div class="settings-section">
-              <h3 class="settings-section-title">Basic Information</h3>
+              <h3 class="settings-section-title">{{ t('admin.settings.basicInfo') }}</h3>
               <div class="form-group">
-                <label class="form-label">Website Name</label>
+                <label class="form-label">{{ t('admin.settings.websiteName') }}</label>
                 <input v-model="settingsForm.site_name" type="text" class="form-input" required>
               </div>
 
               <div class="form-group">
-                <label class="form-label">Website Description</label>
+                <label class="form-label">{{ t('admin.settings.websiteDescription') }}</label>
                 <textarea v-model="settingsForm.site_description" class="form-textarea" rows="3"></textarea>
               </div>
 
               <div class="form-group">
-                <label class="form-label">Company Introduction</label>
+                <label class="form-label">{{ t('admin.settings.companyIntro') }}</label>
                 <textarea v-model="settingsForm.company_intro" class="form-textarea" rows="5"></textarea>
               </div>
             </div>
 
             <!-- Contact Information -->
             <div class="settings-section">
-              <h3 class="settings-section-title">Contact Information</h3>
+              <h3 class="settings-section-title">{{ t('admin.settings.contactInfo') }}</h3>
               <div class="form-group">
-                <label class="form-label">Email</label>
+                <label class="form-label">{{ t('admin.settings.email') }}</label>
                 <input v-model="settingsForm.email" type="email" class="form-input" required>
               </div>
 
               <div class="form-group">
-                <label class="form-label">Phone</label>
+                <label class="form-label">{{ t('admin.settings.phone') }}</label>
                 <input v-model="settingsForm.phone" type="tel" class="form-input">
               </div>
 
               <div class="form-group">
-                <label class="form-label">Address</label>
+                <label class="form-label">{{ t('admin.settings.address') }}</label>
                 <input v-model="settingsForm.address" type="text" class="form-input">
               </div>
             </div>
 
             <!-- Social Media Links -->
             <div class="settings-section">
-              <h3 class="settings-section-title">Social Media Links</h3>
+              <h3 class="settings-section-title">{{ t('admin.settings.socialMedia') }}</h3>
               <div class="form-group">
-                <label class="form-label">LinkedIn URL</label>
+                <label class="form-label">{{ t('admin.settings.linkedinUrl') }}</label>
                 <input v-model="settingsForm.linkedin" type="url" class="form-input" placeholder="https://linkedin.com/company/yourcompany">
               </div>
 
               <div class="form-group">
-                <label class="form-label">Facebook URL</label>
+                <label class="form-label">{{ t('admin.settings.facebookUrl') }}</label>
                 <input v-model="settingsForm.facebook" type="url" class="form-input" placeholder="https://facebook.com/yourcompany">
               </div>
 
               <div class="form-group">
-                <label class="form-label">Twitter URL</label>
+                <label class="form-label">{{ t('admin.settings.twitterUrl') }}</label>
                 <input v-model="settingsForm.twitter" type="url" class="form-input" placeholder="https://twitter.com/yourcompany">
               </div>
             </div>
@@ -282,9 +282,9 @@
             <!-- Action Buttons -->
             <div class="settings-actions">
               <button @click="saveSettings" class="btn btn-primary" :disabled="isSavingSettings">
-                {{ isSavingSettings ? 'Saving...' : 'Save Settings' }}
+                {{ isSavingSettings ? t('admin.settings.saving') : t('admin.settings.saveSettings') }}
               </button>
-              <button @click="resetSettings" class="btn btn-warning">Reset</button>
+              <button @click="resetSettings" class="btn btn-warning">{{ t('admin.settings.reset') }}</button>
             </div>
 
             <div v-if="settingsStatus" :class="['notification', settingsStatus.type]">
@@ -298,59 +298,59 @@
     <!-- Product Modal -->
     <div v-if="showProductModal" class="modal-overlay" @click.self="closeProductModal">
       <div class="modal-content">
-        <h2 class="modal-title">{{ editingProduct ? 'Edit Product' : 'Add New Product' }}</h2>
+        <h2 class="modal-title">{{ editingProduct ? t('admin.productForm.editTitle') : t('admin.productForm.addTitle') }}</h2>
 
         <form @submit.prevent="saveProduct">
           <div class="form-group">
-            <label class="form-label">Product Name *</label>
+            <label class="form-label">{{ t('admin.productForm.productName') }} *</label>
             <input v-model="productForm.name" type="text" class="form-input" required>
           </div>
 
           <div class="form-group">
-            <label class="form-label">Category</label>
-            <input v-model="productForm.category" type="text" class="form-input" placeholder="e.g., Electronics, Machinery">
+            <label class="form-label">{{ t('admin.productForm.category') }}</label>
+            <input v-model="productForm.category" type="text" class="form-input" :placeholder="t('admin.productForm.categoryPlaceholder')">
           </div>
 
           <div class="form-group">
-            <label class="form-label">Description</label>
+            <label class="form-label">{{ t('admin.productForm.description') }}</label>
             <textarea v-model="productForm.description" class="form-textarea" rows="3"></textarea>
           </div>
 
           <div class="form-group">
-            <label class="form-label">Detailed Description (HTML)</label>
+            <label class="form-label">{{ t('admin.productForm.detailedDescription') }}</label>
             <textarea v-model="productForm.detailed_description" class="form-textarea" rows="5"></textarea>
           </div>
 
           <div class="form-group">
-            <label class="form-label">Specifications (HTML)</label>
+            <label class="form-label">{{ t('admin.productForm.specifications') }}</label>
             <textarea v-model="productForm.specifications" class="form-textarea" rows="5"></textarea>
           </div>
 
           <div class="form-group">
-            <label class="form-label">Image URL</label>
-            <input v-model="productForm.image_url" type="url" class="form-input" placeholder="https://example.com/image.jpg">
+            <label class="form-label">{{ t('admin.productForm.imageUrl') }}</label>
+            <input v-model="productForm.image_url" type="url" class="form-input" :placeholder="t('admin.productForm.imageUrlPlaceholder')">
           </div>
 
           <div class="form-group">
-            <label class="form-label">Gallery Images (JSON array of URLs)</label>
-            <textarea v-model="galleryImagesText" class="form-textarea" rows="3" placeholder='["url1", "url2"]'></textarea>
+            <label class="form-label">{{ t('admin.productForm.galleryImages') }}</label>
+            <textarea v-model="galleryImagesText" class="form-textarea" rows="3" :placeholder="t('admin.productForm.galleryPlaceholder')"></textarea>
           </div>
 
           <div class="form-group checkbox-group">
             <label class="checkbox-label">
               <input v-model="productForm.is_featured" type="checkbox">
-              <span>Featured Product</span>
+              <span>{{ t('admin.productForm.featuredProduct') }}</span>
             </label>
             <label class="checkbox-label">
               <input v-model="productForm.is_active" type="checkbox">
-              <span>Active</span>
+              <span>{{ t('admin.productForm.active') }}</span>
             </label>
           </div>
 
           <div class="modal-actions">
-            <button type="button" @click="closeProductModal" class="btn btn-secondary">Cancel</button>
+            <button type="button" @click="closeProductModal" class="btn btn-secondary">{{ t('admin.productForm.cancel') }}</button>
             <button type="submit" class="btn btn-primary" :disabled="isSavingProduct">
-              {{ isSavingProduct ? 'Saving...' : 'Save Product' }}
+              {{ isSavingProduct ? t('admin.productForm.saving') : t('admin.productForm.save') }}
             </button>
           </div>
 
@@ -366,10 +366,12 @@
 <script setup>
 import { ref, reactive, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useProductStore } from '../stores/products'
 import { useSettingsStore } from '../stores/settings'
 import api from '../utils/api'
 
+const { t } = useI18n()
 const router = useRouter()
 const productStore = useProductStore()
 const settingsStore = useSettingsStore()
@@ -377,12 +379,23 @@ const settingsStore = useSettingsStore()
 // Navigation
 const activeTab = ref('overview')
 const navItems = [
-  { id: 'overview', label: 'Overview', icon: '📊' },
-  { id: 'products', label: 'Products', icon: '📦' },
-  { id: 'inquiries', label: 'Inquiries', icon: '💬' },
-  { id: 'settings', label: 'Settings', icon: '⚙️' },
-  { id: 'logout', label: 'Logout', icon: '🚪' }
+  { id: 'overview', key: 'admin.dashboard.nav.overview', icon: '📊' },
+  { id: 'products', key: 'admin.dashboard.nav.products', icon: '📦' },
+  { id: 'inquiries', key: 'admin.dashboard.nav.inquiries', icon: '💬' },
+  { id: 'settings', key: 'admin.dashboard.nav.settings', icon: '⚙️' },
+  { id: 'logout', key: 'admin.dashboard.nav.logout', icon: '🚪' }
 ]
+
+// Computed nav labels
+const navLabels = computed(() => {
+  return {
+    overview: t('admin.dashboard.nav.overview'),
+    products: t('admin.dashboard.nav.products'),
+    inquiries: t('admin.dashboard.nav.inquiries'),
+    settings: t('admin.dashboard.nav.settings'),
+    logout: t('admin.dashboard.nav.logout')
+  }
+})
 
 // Inquiries
 const inquiries = ref([])
@@ -443,7 +456,7 @@ const handleNavClick = (item) => {
 }
 
 const handleLogout = () => {
-  if (confirm('Are you sure you want to logout?')) {
+  if (confirm(t('admin.dashboard.logoutConfirm'))) {
     localStorage.removeItem('admin_token')
     router.push('/admin')
   }
@@ -472,26 +485,26 @@ const updateInquiryStatus = async (inquiry) => {
     await api.put(`/inquiries/${inquiry.id}/status`, { status: inquiry.status })
   } catch (error) {
     console.error('Error updating inquiry status:', error)
-    alert('Failed to update inquiry status')
+    alert(t('admin.inquiries.updateError'))
   }
 }
 
 const viewInquiry = (inquiry) => {
-  alert(`Inquiry from ${inquiry.name}:\n\n${inquiry.message}`)
+  alert(`${t('admin.inquiries.inquiryFrom')} ${inquiry.name}:\n\n${inquiry.message}`)
 }
 
 const deleteInquiryConfirm = async (inquiry) => {
-  if (!confirm(`Are you sure you want to delete inquiry from "${inquiry.name}"?`)) {
+  if (!confirm(t('admin.inquiries.deleteConfirm', {name: inquiry.name}))) {
     return
   }
 
   try {
     await api.delete(`/inquiries/${inquiry.id}`)
     await loadInquiries()
-    alert('Inquiry deleted successfully!')
+    alert(t('admin.inquiries.deleteSuccess'))
   } catch (error) {
     console.error('Error deleting inquiry:', error)
-    alert('Failed to delete inquiry. Please try again.')
+    alert(t('admin.inquiries.deleteError'))
   }
 }
 
@@ -586,7 +599,7 @@ const saveProduct = async () => {
     } catch {
       productStatus.value = {
         type: 'error',
-        message: 'Invalid gallery images format. Please use a valid JSON array.'
+        message: t('admin.productForm.invalidGalleryFormat')
       }
       isSavingProduct.value = false
       return
@@ -596,13 +609,13 @@ const saveProduct = async () => {
       await productStore.updateProduct(editingProduct.value.id, productForm)
       productStatus.value = {
         type: 'success',
-        message: 'Product updated successfully!'
+        message: t('admin.productForm.success')
       }
     } else {
       await productStore.createProduct(productForm)
       productStatus.value = {
         type: 'success',
-        message: 'Product created successfully!'
+        message: t('admin.productForm.success')
       }
     }
 
@@ -613,7 +626,7 @@ const saveProduct = async () => {
     console.error('Error saving product:', error)
     productStatus.value = {
       type: 'error',
-      message: 'Failed to save product. Please try again.'
+      message: t('admin.productForm.error')
     }
   } finally {
     isSavingProduct.value = false
@@ -621,16 +634,16 @@ const saveProduct = async () => {
 }
 
 const deleteProductConfirm = async (product) => {
-  if (!confirm(`Are you sure you want to delete "${product.name}"?`)) {
+  if (!confirm(t('admin.products.deleteConfirm', {name: product.name}))) {
     return
   }
 
   try {
     await productStore.deleteProduct(product.id)
-    alert('Product deleted successfully!')
+    alert(t('admin.products.deleteSuccess'))
   } catch (error) {
     console.error('Error deleting product:', error)
-    alert('Failed to delete product. Please try again.')
+    alert(t('admin.products.deleteError'))
   }
 }
 
@@ -642,7 +655,7 @@ const saveSettings = async () => {
     await settingsStore.updateSettings(settingsForm)
     settingsStatus.value = {
       type: 'success',
-      message: 'Settings saved successfully!'
+      message: t('admin.settings.saveSuccess')
     }
 
     setTimeout(() => {
@@ -652,7 +665,7 @@ const saveSettings = async () => {
     console.error('Error saving settings:', error)
     settingsStatus.value = {
       type: 'error',
-      message: 'Failed to save settings. Please try again.'
+      message: t('admin.settings.saveError')
     }
   } finally {
     isSavingSettings.value = false
@@ -663,7 +676,7 @@ const resetSettings = () => {
   Object.assign(settingsForm, settingsStore.settings)
   settingsStatus.value = {
     type: 'success',
-    message: 'Settings reset to last saved values'
+    message: t('admin.settings.resetSuccess')
   }
   setTimeout(() => {
     settingsStatus.value = null

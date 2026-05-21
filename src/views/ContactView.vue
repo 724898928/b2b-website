@@ -3,8 +3,8 @@
     <!-- Page Header -->
     <section class="hero" style="padding: 3rem 2rem;">
       <div class="container">
-        <h1>Contact Us</h1>
-        <p>Get in touch with our team</p>
+        <h1>{{ t('contact.title') }}</h1>
+        <p>{{ t('contact.subtitle') }}</p>
       </div>
     </section>
 
@@ -13,13 +13,13 @@
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; max-width: 1000px; margin: 0 auto;">
         <!-- Contact Information -->
         <div>
-          <h2 style="font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--primary-color);">Contact Information</h2>
+          <h2 style="font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--primary-color);">{{ t('contact.contactInfo') }}</h2>
           
           <div style="margin-bottom: 2rem;">
             <div style="display: flex; align-items: center; margin-bottom: 1rem;">
               <span style="font-size: 1.5rem; margin-right: 1rem;">📧</span>
               <div>
-                <strong>Email</strong>
+                <strong>{{ t('contact.yourEmail') }}</strong>
                 <p style="color: var(--text-light);">{{ settingsStore.settings.email }}</p>
               </div>
             </div>
@@ -27,7 +27,7 @@
             <div style="display: flex; align-items: center; margin-bottom: 1rem;">
               <span style="font-size: 1.5rem; margin-right: 1rem;">📞</span>
               <div>
-                <strong>Phone</strong>
+                <strong>{{ t('contact.yourPhone') }}</strong>
                 <p style="color: var(--text-light);">{{ settingsStore.settings.phone }}</p>
               </div>
             </div>
@@ -42,31 +42,31 @@
           </div>
           
           <div>
-            <h3 style="font-size: 1.2rem; margin-bottom: 1rem; color: var(--primary-color);">Business Hours</h3>
-            <p style="color: var(--text-light);">Monday - Friday: 9:00 AM - 6:00 PM</p>
-            <p style="color: var(--text-light);">Saturday: 10:00 AM - 4:00 PM</p>
-            <p style="color: var(--text-light);">Sunday: Closed</p>
+            <h3 style="font-size: 1.2rem; margin-bottom: 1rem; color: var(--primary-color);">{{ t('contact.businessHours') }}</h3>
+            <p style="color: var(--text-light);">{{ t('contact.hoursWeekday') }}</p>
+            <p style="color: var(--text-light);">{{ t('contact.hoursSaturday') }}</p>
+            <p style="color: var(--text-light);">{{ t('contact.hoursSunday') }}</p>
           </div>
         </div>
         
         <!-- Contact Form -->
         <div style="background: white; padding: 2rem; border-radius: 0.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-          <h2 style="font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--primary-color);">Send us a Message</h2>
+          <h2 style="font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--primary-color);">{{ t('contact.sendMessage') }}</h2>
           
           <form @submit.prevent="handleSubmit">
             <div class="form-group">
-              <label class="form-label">Name *</label>
+              <label class="form-label">{{ t('contact.yourName') }} *</label>
               <input 
                 v-model="formData.name"
                 type="text" 
                 class="form-input" 
                 required
-                placeholder="Your name"
+                :placeholder="t('contact.namePlaceholder')"
               >
             </div>
             
             <div class="form-group">
-              <label class="form-label">Email *</label>
+              <label class="form-label">{{ t('contact.yourEmail') }} *</label>
               <input 
                 v-model="formData.email"
                 type="email" 
@@ -77,39 +77,39 @@
             </div>
             
             <div class="form-group">
-              <label class="form-label">Phone</label>
+              <label class="form-label">{{ t('contact.yourPhone') }}</label>
               <input 
                 v-model="formData.phone"
                 type="tel" 
                 class="form-input" 
-                placeholder="Your phone number"
+                :placeholder="t('contact.phonePlaceholder')"
               >
             </div>
             
             <div class="form-group">
-              <label class="form-label">Subject *</label>
+              <label class="form-label">{{ t('contact.subject') }} *</label>
               <input 
                 v-model="formData.subject"
                 type="text" 
                 class="form-input" 
                 required
-                placeholder="Message subject"
+                :placeholder="t('contact.subjectPlaceholder')"
               >
             </div>
             
             <div class="form-group">
-              <label class="form-label">Message *</label>
+              <label class="form-label">{{ t('contact.yourMessage') }} *</label>
               <textarea 
                 v-model="formData.message"
                 class="form-textarea" 
                 required
                 rows="5"
-                placeholder="Your message..."
+                :placeholder="t('contact.messagePlaceholder')"
               ></textarea>
             </div>
             
             <button type="submit" class="btn btn-primary" style="width: 100%;" :disabled="isSubmitting">
-              {{ isSubmitting ? 'Sending...' : 'Send Message' }}
+              {{ isSubmitting ? t('contact.sending') : t('contact.submit') }}
             </button>
           </form>
           
@@ -124,9 +124,11 @@
 
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useSettingsStore } from '../stores/settings'
 import api from '../utils/api'
 
+const { t } = useI18n()
 const settingsStore = useSettingsStore()
 const isSubmitting = ref(false)
 const submitStatus = ref(null)
@@ -149,7 +151,7 @@ const handleSubmit = async () => {
   if (!validateEmail(formData.email)) {
     submitStatus.value = {
       type: 'error',
-      message: 'Please enter a valid email address'
+      message: t('contact.invalidEmail')
     }
     return
   }
@@ -163,7 +165,7 @@ const handleSubmit = async () => {
     if (response.data.success) {
       submitStatus.value = {
         type: 'success',
-        message: 'Thank you! Your message has been sent successfully. We will get back to you soon.'
+        message: t('contact.successMessage')
       }
       
       // Reset form
@@ -182,7 +184,7 @@ const handleSubmit = async () => {
     console.error('Error sending inquiry:', error)
     submitStatus.value = {
       type: 'error',
-      message: 'Sorry, there was an error sending your message. Please try again later.'
+      message: t('contact.errorMessage')
     }
   } finally {
     isSubmitting.value = false

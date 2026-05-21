@@ -3,7 +3,7 @@
     <!-- Page Header -->
     <section class="hero" style="padding: 3rem 2rem;">
       <div class="container">
-        <h1>About Us</h1>
+        <h1>{{ t('about.title') }}</h1>
       </div>
     </section>
 
@@ -11,7 +11,7 @@
     <section class="container" style="margin-top: 2rem; margin-bottom: 3rem;">
       <div style="max-width: 800px; margin: 0 auto;">
         <h2 style="font-size: 2rem; margin-bottom: 1.5rem; color: var(--primary-color); text-align: center;">
-          Our Story
+          {{ t('about.ourStory') }}
         </h2>
         
         <div style="line-height: 1.8; color: var(--text-light); font-size: 1.1rem;">
@@ -25,20 +25,18 @@
             a trusted partner for businesses worldwide.
           </p>
           
-          <h3 style="font-size: 1.5rem; margin: 2rem 0 1rem; color: var(--primary-color);">Our Mission</h3>
+          <h3 style="font-size: 1.5rem; margin: 2rem 0 1rem; color: var(--primary-color);">{{ t('about.ourMission') }}</h3>
           <p style="margin-bottom: 1.5rem;">
-            To provide high-quality products and exceptional service that help our clients achieve their 
-            business goals. We believe in building long-term partnerships based on trust, transparency, 
-            and mutual success.
+            {{ t('about.missionDesc') }}
           </p>
           
-          <h3 style="font-size: 1.5rem; margin: 2rem 0 1rem; color: var(--primary-color);">Our Values</h3>
+          <h3 style="font-size: 1.5rem; margin: 2rem 0 1rem; color: var(--primary-color);">{{ t('about.ourValues') }}</h3>
           <ul style="list-style: disc; padding-left: 2rem; margin-bottom: 1.5rem;">
-            <li style="margin-bottom: 0.5rem;">Quality Excellence</li>
-            <li style="margin-bottom: 0.5rem;">Customer Focus</li>
-            <li style="margin-bottom: 0.5rem;">Innovation & Continuous Improvement</li>
-            <li style="margin-bottom: 0.5rem;">Integrity & Transparency</li>
-            <li style="margin-bottom: 0.5rem;">Sustainability</li>
+            <li style="margin-bottom: 0.5rem;">{{ t('about.valueQuality') }}</li>
+            <li style="margin-bottom: 0.5rem;">{{ t('about.valueCustomer') }}</li>
+            <li style="margin-bottom: 0.5rem;">{{ t('about.valueInnovation') }}</li>
+            <li style="margin-bottom: 0.5rem;">{{ t('about.valueIntegrity') }}</li>
+            <li style="margin-bottom: 0.5rem;">{{ t('about.valueSustainability') }}</li>
           </ul>
         </div>
       </div>
@@ -48,8 +46,10 @@
 
 <script setup>
 import { onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useSettingsStore } from '../stores/settings'
 
+const { t } = useI18n()
 const settingsStore = useSettingsStore()
 
 onMounted(() => {

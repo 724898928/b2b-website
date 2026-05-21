@@ -8,13 +8,13 @@
           <p>{{ settingsStore.settings.site_description }}</p>
           <div class="hero-actions">
             <router-link to="/products" class="btn btn-secondary">
-              <span>Explore Products</span>
+              <span>{{ t('home.exploreProducts') }}</span>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M5 12h14M12 5l7 7-7 7"/>
               </svg>
             </router-link>
             <router-link to="/contact" class="btn btn-primary">
-              Get in Touch
+              {{ t('home.getInTouch') }}
             </router-link>
           </div>
         </div>
@@ -25,7 +25,7 @@
     <section class="section">
       <div class="container">
         <div class="intro-content">
-          <h2 class="section-title">About Our Company</h2>
+          <h2 class="section-title">{{ t('home.aboutCompany') }}</h2>
           <p class="section-subtitle">
             {{ settingsStore.settings.company_intro || 'We are a leading manufacturer and supplier of high-quality industrial products.' }}
           </p>
@@ -36,32 +36,32 @@
     <!-- Features Section -->
     <section class="section" style="background: var(--gray-50);">
       <div class="container">
-        <h2 class="section-title">Why Choose Us</h2>
-        <p class="section-subtitle">Delivering excellence through innovation, quality, and customer-focused solutions</p>
+        <h2 class="section-title">{{ t('home.whyChooseUs') }}</h2>
+        <p class="section-subtitle">{{ t('home.whyChooseSubtitle') }}</p>
 
         <div class="grid grid-4 features-grid">
           <div class="feature-card">
             <div class="feature-icon">🏆</div>
-            <h3>Premium Quality</h3>
-            <p>All products undergo strict quality control and meet international standards including ISO 9001 certification.</p>
+            <h3>{{ t('home.premiumQuality') }}</h3>
+            <p>{{ t('home.premiumQualityDesc') }}</p>
           </div>
 
           <div class="feature-card">
             <div class="feature-icon">🌍</div>
-            <h3>Global Reach</h3>
-            <p>Serving customers in over 50 countries with reliable logistics, local support, and multilingual service teams.</p>
+            <h3>{{ t('home.globalReach') }}</h3>
+            <p>{{ t('home.globalReachDesc') }}</p>
           </div>
 
           <div class="feature-card">
             <div class="feature-icon">💼</div>
-            <h3>Expert Service</h3>
-            <p>Professional team with decades of industry experience ready to provide customized solutions for your needs.</p>
+            <h3>{{ t('home.expertService') }}</h3>
+            <p>{{ t('home.expertServiceDesc') }}</p>
           </div>
 
           <div class="feature-card">
-            <div class="feature-icon">⚡</div>
-            <h3>Fast Delivery</h3>
-            <p>Efficient supply chain management ensures quick turnaround times and guaranteed on-time delivery worldwide.</p>
+            <div class="feature-icon"></div>
+            <h3>{{ t('home.fastDelivery') }}</h3>
+            <p>{{ t('home.fastDeliveryDesc') }}</p>
           </div>
         </div>
       </div>
@@ -70,15 +70,15 @@
     <!-- Featured Products -->
     <section class="section">
       <div class="container">
-        <h2 class="section-title">Featured Products</h2>
-        <p class="section-subtitle">Discover our most popular and innovative solutions trusted by industry leaders</p>
+        <h2 class="section-title">{{ t('home.featuredProducts') }}</h2>
+        <p class="section-subtitle">{{ t('home.featuredSubtitle') }}</p>
 
         <div v-if="productStore.isLoading" class="spinner"></div>
 
         <div v-else-if="featuredProducts.length === 0" class="empty-state">
-          <div class="empty-state-icon">📦</div>
-          <h3>No featured products available</h3>
-          <p>Check back soon for our latest innovations</p>
+          <div class="empty-state-icon"></div>
+          <h3>{{ t('home.noFeaturedProducts') }}</h3>
+          <p>{{ t('home.checkBackSoon') }}</p>
         </div>
 
         <div v-else class="grid grid-3">
@@ -91,7 +91,7 @@
 
         <div class="view-all-container">
           <router-link to="/products" class="btn btn-primary btn-large">
-            View All Products
+            {{ t('home.viewAllProducts') }}
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M5 12h14M12 5l7 7-7 7"/>
             </svg>
@@ -104,11 +104,11 @@
     <section class="cta-section">
       <div class="container">
         <div class="cta-content">
-          <h2>Ready to Transform Your Business?</h2>
-          <p>Let's discuss how our solutions can help you achieve your goals</p>
+          <h2>{{ t('home.readyToTransform') }}</h2>
+          <p>{{ t('home.transformSubtitle') }}</p>
           <div class="cta-actions">
-            <router-link to="/contact" class="btn btn-secondary">Request a Quote</router-link>
-            <router-link to="/about" class="btn btn-primary">Learn More</router-link>
+            <router-link to="/contact" class="btn btn-secondary">{{ t('home.requestQuote') }}</router-link>
+            <router-link to="/about" class="btn btn-primary">{{ t('home.learnMore') }}</router-link>
           </div>
         </div>
       </div>
@@ -118,22 +118,30 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useSettingsStore } from '../stores/settings'
 import { useProductStore } from '../stores/products'
 import ProductCard from '../components/ProductCard.vue'
 
+const { t } = useI18n()
 const settingsStore = useSettingsStore()
 const productStore = useProductStore()
 const featuredProducts = ref([])
 
 onMounted(async () => {
-  await settingsStore.loadSettings()
+  // 即使 API 失败，也会使用默认值显示页面
+  try {
+    await settingsStore.loadSettings()
+  } catch (error) {
+    console.warn('Settings load failed, using defaults:', error)
+  }
   
   try {
     await productStore.loadFeaturedProducts()
     featuredProducts.value = productStore.featuredProducts
   } catch (error) {
-    console.error('Error loading featured products:', error)
+    console.warn('Featured products load failed:', error)
+    featuredProducts.value = []
   }
 })
 </script>

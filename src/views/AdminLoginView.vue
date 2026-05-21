@@ -3,8 +3,8 @@
     <!-- Page Header -->
     <section class="hero" style="padding: 3rem 2rem;">
       <div class="container">
-        <h1>Admin Login</h1>
-        <p>Please sign in to access the admin dashboard</p>
+        <h1>{{ t('admin.login.title') }}</h1>
+        <p>{{ t('admin.login.subtitle') }}</p>
       </div>
     </section>
 
@@ -13,29 +13,29 @@
       <div style="max-width: 400px; margin: 0 auto; background: white; padding: 2rem; border-radius: 0.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
         <form @submit.prevent="handleLogin">
           <div class="form-group">
-            <label class="form-label">Username</label>
+            <label class="form-label">{{ t('admin.login.username') }}</label>
             <input 
               v-model="loginForm.username"
               type="text" 
               class="form-input" 
               required
-              placeholder="Enter your username"
+              :placeholder="t('admin.login.username')"
             >
           </div>
           
           <div class="form-group">
-            <label class="form-label">Password</label>
+            <label class="form-label">{{ t('admin.login.password') }}</label>
             <input 
               v-model="loginForm.password"
               type="password" 
               class="form-input" 
               required
-              placeholder="Enter your password"
+              :placeholder="t('admin.login.password')"
             >
           </div>
           
           <button type="submit" class="btn btn-primary" style="width: 100%;" :disabled="isLoggingIn">
-            {{ isLoggingIn ? 'Signing in...' : 'Sign In' }}
+            {{ isLoggingIn ? t('admin.login.loggingIn') : t('admin.login.login') }}
           </button>
           
           <div v-if="loginError" class="notification error" style="margin-top: 1rem;">
@@ -50,7 +50,10 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import api from '../utils/api'
+
+const { t } = useI18n()
 
 const router = useRouter()
 const isLoggingIn = ref(false)
@@ -75,7 +78,7 @@ const handleLogin = async () => {
       // Redirect to dashboard
       router.push('/admin/dashboard')
     } else {
-      loginError.value = 'Invalid username or password'
+      loginError.value = t('admin.login.invalidCredentials')
     }
   } catch (error) {
     console.error('Login error:', error)

@@ -3,28 +3,28 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-section">
-          <h3>About Us</h3>
+          <h3>{{ t('footer.aboutUs') }}</h3>
           <p>{{ settingsStore.settings.site_description }}</p>
         </div>
         <div class="footer-section">
-          <h3>Quick Links</h3>
+          <h3>{{ t('footer.quickLinks') }}</h3>
           <ul>
-            <li><router-link to="/">Home</router-link></li>
-            <li><router-link to="/products">Products</router-link></li>
-            <li><router-link to="/about">About Us</router-link></li>
-            <li><router-link to="/contact">Contact</router-link></li>
+            <li><router-link to="/">{{ t('footer.home') }}</router-link></li>
+            <li><router-link to="/products">{{ t('footer.products') }}</router-link></li>
+            <li><router-link to="/about">{{ t('footer.about') }}</router-link></li>
+            <li><router-link to="/contact">{{ t('footer.contact') }}</router-link></li>
           </ul>
         </div>
         <div class="footer-section">
-          <h3>Contact Info</h3>
+          <h3>{{ t('footer.contactInfo') }}</h3>
           <ul>
-            <li>Email: {{ settingsStore.settings.email }}</li>
-            <li>Phone: {{ settingsStore.settings.phone }}</li>
-            <li>Address: {{ settingsStore.settings.address }}</li>
+            <li>{{ t('footer.email') }}: {{ settingsStore.settings.email }}</li>
+            <li>{{ t('footer.phone') }}: {{ settingsStore.settings.phone }}</li>
+            <li>{{ t('footer.address') }}: {{ settingsStore.settings.address }}</li>
           </ul>
         </div>
         <div class="footer-section">
-          <h3>Follow Us</h3>
+          <h3>{{ t('footer.followUs') }}</h3>
           <ul>
             <li v-if="settingsStore.settings.linkedin !== '#'">
               <a :href="settingsStore.settings.linkedin" target="_blank">LinkedIn</a>
@@ -39,8 +39,8 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p class="copyright">&copy; {{ currentYear }} {{ settingsStore.settings.site_name }}. All rights reserved.</p>
-        <router-link to="/admin" class="admin-link">Admin Login</router-link>
+        <p class="copyright">&copy; {{ currentYear }} {{ settingsStore.settings.site_name }}. {{ t('footer.allRightsReserved') }}</p>
+        <router-link to="/admin" class="admin-link">{{ t('footer.adminLogin') }}</router-link>
       </div>
     </div>
   </footer>
@@ -48,8 +48,10 @@
 
 <script setup>
 import { computed, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useSettingsStore } from '../stores/settings'
 
+const { t } = useI18n()
 const settingsStore = useSettingsStore()
 const currentYear = computed(() => new Date().getFullYear())
 

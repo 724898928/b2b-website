@@ -8,10 +8,16 @@
         <span></span>
       </div>
       <ul class="nav-menu" :class="{ active: isMenuOpen }">
-        <li><router-link to="/" class="nav-link" @click="closeMenu">Home</router-link></li>
-        <li><router-link to="/products" class="nav-link" @click="closeMenu">Products</router-link></li>
-        <li><router-link to="/about" class="nav-link" @click="closeMenu">About</router-link></li>
-        <li><router-link to="/contact" class="nav-link" @click="closeMenu">Contact</router-link></li>
+        <li><router-link to="/" class="nav-link" @click="closeMenu">{{ t('nav.home') }}</router-link></li>
+        <li><router-link to="/products" class="nav-link" @click="closeMenu">{{ t('nav.products') }}</router-link></li>
+        <li><router-link to="/about" class="nav-link" @click="closeMenu">{{ t('nav.about') }}</router-link></li>
+        <li><router-link to="/contact" class="nav-link" @click="closeMenu">{{ t('nav.contact') }}</router-link></li>
+        <li class="lang-switcher">
+          <select v-model="currentLocale" @change="changeLanguage" class="lang-select">
+            <option value="zh">中文</option>
+            <option value="en">English</option>
+          </select>
+        </li>
       </ul>
     </div>
   </nav>
@@ -19,10 +25,13 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useSettingsStore } from '../stores/settings'
 
+const { locale, t } = useI18n()
 const settingsStore = useSettingsStore()
 const isMenuOpen = ref(false)
+const currentLocale = ref(locale.value)
 
 const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value
@@ -30,6 +39,11 @@ const toggleMenu = () => {
 
 const closeMenu = () => {
   isMenuOpen.value = false
+}
+
+const changeLanguage = () => {
+  locale.value = currentLocale.value
+  localStorage.setItem('locale', currentLocale.value)
 }
 
 onMounted(() => {
@@ -94,6 +108,7 @@ onMounted(() => {
   display: flex;
   list-style: none;
   gap: 2.5rem;
+  align-items: center;
 }
 
 .nav-link {
@@ -125,6 +140,31 @@ onMounted(() => {
 .nav-link:hover,
 .nav-link.router-link-active {
   color: var(--primary-color);
+}
+
+.lang-switcher {
+  margin-left: 1rem;
+}
+
+.lang-select {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 0.375rem;
+  background: white;
+  color: var(--text-dark);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: border-color 0.3s;
+}
+
+.lang-select:hover {
+  border-color: var(--primary-color);
+}
+
+.lang-select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
 .menu-toggle {
