@@ -50,12 +50,25 @@ const handleImageError = (e) => {
 .product-card {
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: all 0.3s;
+}
+
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.15);
 }
 
 .product-image-wrapper {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(135deg, var(--gray-100), var(--gray-200));
+  background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+  flex-shrink: 0;
 }
 
 .card-image {
@@ -105,38 +118,75 @@ const handleImageError = (e) => {
   display: flex;
   flex-direction: column;
   flex: 1;
+  gap: 0.5rem;
+  min-height: 200px;
 }
 
 .card-title {
-  font-size: 1.375rem;
+  font-size: 1.125rem;
   margin-bottom: 0.75rem;
-  line-height: 1.3;
+  line-height: 1.4;
+  font-weight: 600;
+  color: var(--text-dark);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  min-height: 2.8em;
+  max-height: 2.8em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .card-description {
-  font-size: 0.95rem;
-  line-height: 1.6;
-  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 1.75rem;
   flex: 1;
+  color: var(--text-light);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  min-height: 2.7em;
+  max-height: 2.7em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .card-footer {
   margin-top: auto;
+  display: flex;
+  gap: 0.5rem;
 }
 
 .btn-full {
   width: 100%;
   justify-content: center;
   gap: 0.5rem;
+  flex: 1;
 }
 
 @media (max-width: 768px) {
   .card-image {
-    height: 220px;
+    height: 200px;
   }
 
   .card-content {
     padding: 1.5rem;
+  }
+  
+  .card-title {
+    font-size: 1rem;
+    min-height: 2.4em;
+    max-height: 2.4em;
+  }
+  
+  .card-description {
+    font-size: 0.85rem;
+    min-height: 2.4em;
+    max-height: 2.4em;
+    margin-bottom: 1.5rem;
   }
 }
 </style>

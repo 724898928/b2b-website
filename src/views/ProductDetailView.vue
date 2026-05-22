@@ -21,7 +21,7 @@
           <!-- Product Image -->
           <div>
             <img 
-              :src="product.image_url || '/images/placeholder.jpg'" 
+              :src="mainImage || product.image_url || '/images/placeholder.jpg'" 
               :alt="product.name"
               style="width: 100%; border-radius: 0.5rem;"
               @error="handleImageError"
@@ -34,7 +34,8 @@
                 :key="index"
                 :src="img"
                 :alt="`Gallery ${index + 1}`"
-                style="width: 80px; height: 80px; object-fit: cover; border-radius: 0.25rem; cursor: pointer;"
+                style="width: 80px; height: 80px; object-fit: cover; border-radius: 0.25rem; cursor: pointer; border: 2px solid transparent; transition: all 0.3s;"
+                :style="{ borderColor: mainImage === img ? 'var(--primary-color)' : 'transparent' }"
                 @click="mainImage = img"
               >
             </div>

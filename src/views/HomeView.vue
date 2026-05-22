@@ -72,6 +72,7 @@
       <div class="container">
         <h2 class="section-title">{{ t('home.featuredProducts') }}</h2>
         <p class="section-subtitle">{{ t('home.featuredSubtitle') }}</p>
+        <br />
 
         <div v-if="productStore.isLoading" class="spinner"></div>
 
