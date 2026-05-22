@@ -17,7 +17,7 @@ export async function handleSettings(request, env, corsHeaders) {
   }
 
   // POST /api/settings - Update settings (Super Admin only)
-  if (method === 'POST') {
+  if (method === 'POST' || method === 'PUT') {
     return updateSettings(request, env, corsHeaders);
   }
 

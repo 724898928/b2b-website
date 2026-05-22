@@ -174,7 +174,11 @@
       "saving": "保存中...",
       "success": "产品保存成功！",
       "error": "产品保存失败，请重试。",
-      "invalidGalleryFormat": "图库图片格式无效。请使用有效的JSON数组。"
+      "invalidGalleryFormat": "图库图片格式无效。请使用有效的JSON数组。",
+      "unsavedChanges": "有未保存的更改",
+      "unsavedMessage": "您有未保存的更改。确定要放弃这些更改吗？",
+      "keepEditing": "继续编辑",
+      "discardChanges": "放弃更改"
     },
     "inquiries": {
       "manageInquiries": "询盘管理",

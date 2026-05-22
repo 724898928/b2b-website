@@ -174,7 +174,11 @@
       "saving": "Saving...",
       "success": "Product saved successfully!",
       "error": "Failed to save product. Please try again.",
-      "invalidGalleryFormat": "Invalid gallery images format. Please use a valid JSON array."
+      "invalidGalleryFormat": "Invalid gallery images format. Please use a valid JSON array.",
+      "unsavedChanges": "Unsaved Changes",
+      "unsavedMessage": "You have unsaved changes. Do you want to discard them?",
+      "keepEditing": "Keep Editing",
+      "discardChanges": "Discard Changes"
     },
     "inquiries": {
       "manageInquiries": "Manage Inquiries",
